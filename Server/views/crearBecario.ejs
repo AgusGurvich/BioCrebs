@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="FormularioLoginStyle.css">
+    <title>Registrarse</title>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="blueBg">
+            <div class="box signin">
+                <h2>Ya tenés una Cuenta?</h2>
+                <button class="signinBtn">Sign In</button>
+            </div>
+            <div class="box signup">
+                <h2>No tenés una Cuenta?</h2>
+                <button class="signupBtn">Sign Up</button>
+            </div>
+        </div>
+        <div class="formBx">
+            <!-- <div class="form signinForm">
+                <form method="post">
+                    <h3>Sign In</h3>
+                    <input type="number" name="username" id="username" placeholder="Inserte su DNI">
+                    <input type="password" name="password" id="password" placeholder="Contraseña">
+                    <input type="submit" value="Login">
+                    <a href="/seleccion" class="forgot">Olvidaste tu Contraseña?</a>
+                </form>
+            </div> -->
+            <div class="form signupForm">
+                <form action="/crearBecario" method="post">
+                    <h3>Sign Up</h3>
+                    <input type="text" name="Nombre" id="Nombre" placeholder="Nombre Completo">
+                    <input type="text" name="username" id="username" placeholder="Nombre de Usuario">
+                    <input type="email" name="email" id="email" placeholder="Mail">
+                    <input type="password" name="password" id="password" placeholder="Contraseña">
+                    <input type="password" name="confirm" id="confirm" placeholder="Confirmar Contraseña">
+                    <input type="number" name="DNI" id="DNI" placeholder="DNI">
+                    <input type="submit" value="Crea una Cuenta">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="FormularioLoginScript.js"></script>
+</body>
+</html>

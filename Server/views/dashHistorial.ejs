@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREB's</title>
+    <script src="https://kit.fontawesome.com/5dd57f835c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/dashPendientes.css">
+</head>
+<body>
+    
+    <div id="top__of-page">
+        <header>
+            <div id="img_top"><img src="/IMG-20231211-WA0080.jpg"></div>
+        </header>
+        <div id="menu-icon"><a href="/login"><i class="fa-solid fa-user"></i></a></div>
+    </div>
+
+    
+    <div id="main">
+        <div id="contenedor_historial">
+
+            <div id="historial_cabeza">
+                <p id="numero">Número de Pedido</p>
+                <p>Número de Copias</p>
+                <p>Archivo</p>
+                <p>Precio</p>
+            </div>
+
+            <div id="historial_cuerpo">
+                <% pedidos.forEach((pedido) => { %>
+                    
+                    <div class="historial_entrada">
+
+                        <p class="pedido_id"><%= pedido.id %></p>
+                        <p><%= pedido.copias %> copias</p>
+                        <% if(pedido.nombre_archivo) {%>
+                            <p><a class="nombre_archivo" href="/download/<%=pedido.nombre_archivo%>" target="_blank"><%= pedido.nombre %></a></p>
+                        <%} else {%>
+                            <p><a class="nombre_archivo" href="<%=pedido.link%>" target="_blank"><%= pedido.nombre %></a></p>
+                        <%}%>
+
+                        <p><%= pedido.precio %></p>     
+                        
+                        <div class="pedido_masinfo">
+                            <p><a class="ID" href="/Dashpedido/<%= pedido.id%>" target="_blank">Más Opciones</a></p>
+                            <p><%= pedido.tipo_impresion %> Faz</p>
+                            <p><b class="estado"><%= pedido.estado %></b></p>
+                            <p><b class="estadoPago"><%= pedido.estadoPago %></b></p>
+                        </div>
+
+                    </div>                
+            
+                <% })%>
+            
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+const estado = document.querySelectorAll('.estado');
+const estadoPago = document.querySelectorAll('.estadoPago');
+const archivos = document.querySelectorAll('.nombre_archivo');
+
+archivos.forEach( archivo => {
+    archivo.onclick = (e) => {   
+        e.target.style.cssText = 'background-color: var(--Blue); color: var(--fondo);'
+
+    }
+})
+  
+estadoPago.forEach(estado => {
+    if(estado.textContent == 'No abonado') {
+            estado.style.cssText = "background-color: var(--red);";
+    }
+if(estado.textContent == 'Abonado') {
+    estado.style.cssText = "background-color: var(--Verde);";
+}
+});
+
+estado.forEach(estado => {
+
+if(estado.textContent == 'Pendiente') {
+    estado.style.cssText = "background-color: var(--red);";
+    console.log("funciona");
+}
+if(estado.textContent == 'Listo') {
+    estado.style.cssText = "background-color: var(--thirdty);";
+}
+});
+    </script>
+
+</body>
+</html>

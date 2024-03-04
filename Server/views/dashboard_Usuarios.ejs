@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREB's</title>
+
+    <link rel="stylesheet" href="dashUsuarios.css">
+</head>
+<body>    
+    <div id="top__of-page">
+        <header>
+            <a href="/dashboard"><div id="img_top"><img src="IMG-20231211-WA0080.jpg"></div></a>
+        </header>
+        <div id="menu-icon"><a href="/login"><i class="fa-solid fa-user"></i></a></div>
+    </div>
+
+    <div id="main">
+        <div id="main_buscador">
+            <div class="search-input-box">
+				<input id="input_buscar" type="text" placeholder="¿Qué quieres buscar?" />
+				<a id="buscar" href="#" target="_blank">Buscar</a>
+                <ul class="container-suggestions">
+                    <li>sugerencia 1</li>
+                    <li>sugerencia 2</li>
+                    <li>sugerencia 3</li>
+                </ul>
+			</div>
+        </div>
+
+        <div id="contenedor_historial">
+
+            <div id="historial_cabeza">
+                <p id="numero">Número de Usuario</p>
+                <p>Nombre Completo</p>
+                <p>Email</p>
+                <p>Username</p>
+            </div>
+
+            <div id="historial_cuerpo">
+                <% usuarios.forEach((usuario) => { %>
+                    
+                    <div class="historial_entrada">
+
+                        <p class="pedido_id"><%= usuario.id %></p>
+                        <p><%= usuario.nombre %></p>
+                        <p><%= usuario.email %></p>     
+                        <p><%= usuario.username %></p>     
+                        
+                        <div class="pedido_masinfo">
+                            <p> $<%= usuario.saldo %></p>
+                            <p><%= usuario.DNI %></p>
+                            <p><%= usuario.ingreso %></p>
+                            <p><%= usuario.Description %></p>
+                            <p><%= usuario.user_image %></p>
+                        </div>
+
+                    </div>                
+            
+                <% })%>
+            
+            </div>
+        </div>
+    </div>
+
+  <script src="usuariosScript.js"></script>
+</body>
+</html>

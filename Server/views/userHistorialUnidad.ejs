@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREB's</title>
+    <script src="https://kit.fontawesome.com/5dd57f835c.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/historialIndividual.css">
+</head>
+<body>    
+    <div id="top__of-page">
+        <header>
+            <a href="/inicio"><div id="img_top"><img src="/IMG-20231211-WA0080.jpg"></div></a>
+        </header>
+        <div id="menu-icon"><a href="/login"><i class="fa-solid fa-user"></i></a></div>
+    </div>
+
+    <div class="flotante">
+        <div class="flotante_panel">
+            <div id="close"><i class="fa-solid fa-x"></i></div>
+            <h3>Ventana de Pago</h3>
+            <p>Precio / Faltante : $<%= pedido.precio %></p>
+            <div id="flotante_pago">
+                <button id="reserveButton">Señar</button>
+                <button id="Pagar">Pagar Completo</button>
+            </div>
+            <p>Estado Actual:  <span><%= pedido.estadoPago %></span></p>
+        </div>
+    </div>
+
+    <div id="main">
+        <div id="user_container">
+
+            <div class="pedido_section">
+                <b>ID del Pedido </b>
+                <p id="pedidoID"><%= pedido.id %></p>
+            </div>
+            <div class="pedido_section">
+                <b>Fecha de Ingreso</b>
+                <p><%= pedido.fecha%></p>
+            </div>
+            <div class="pedido_section">
+                <b>Usuario del Pedido</b>
+                <p id="username"><%= user.nombre %></p>
+            </div>
+            <div class="pedido_section">
+                <b>Archivo</b>
+                <p id="nombre_archivo"><%= pedido.nombre%></p>
+                <% if(pedido.nombre_archivo) {%>
+                    <a class="Descargar" id="Descargar" href="/download/<%=pedido.nombre_archivo%>" target="_blank">Descargar</a>
+                <%} else {%>
+                    <p><a class="Descargar" id="Descargar" href="<%=pedido.link%>" target="_blank"><%= pedido.nombre %></a></p>
+                <%}%>
+            </div>
+            <div class="pedido_section">
+                <b>Link de Descarga</b>
+                <% if(pedido.link != "No hay Link disponible" && pedido.link) {%>
+                    <a id="Link" class="Descargar" target="_blank" href="<%= pedido.link%>">Carpeta de Drive</a>
+                <%} else {%>
+                    <a class="Descargar" id="Descargar" href="/download/<%=pedido.nombre_archivo%>" target="_blank">Descargar</a>
+                <%}%>
+            </div>      
+            <div class="pedido_section">
+                <b>Formato</b>
+                <p><%= pedido.formato %></p>
+            </div>
+            <div class="pedido_section">
+                <b>Anillado</b>
+                <p><%= pedido.anillado %></p>
+            </div>
+            <div class="pedido_section">
+                <b>Copias</b>
+                <p><%= pedido.copias %></p>
+            </div>
+            <div class="pedido_section">
+                <b>Faz</b>
+                <p><%= pedido.tipo_impresion %></p>
+            </div>
+            <div class="pedido_section">
+                <b>Fotocopiadora</b>
+                <p><%= pedido.fotocopiadora %></p>
+            </div>
+            <div class="pedido_section">
+                <b>Descripción</b>
+                <p><%= pedido.descripción %></p>
+            </div>
+            <div class="pedido_section">
+                <b>Precio / Faltante</b>
+                <p id="precio">$ <%= pedido.precio %></p>
+            </div>
+            <div class="pedido_section">
+                <b>Estado del Pedido</b>
+                <p class="estado"><%= pedido.estado %></p>
+            </div>
+            <div class="pedido_section">
+                <b>Estado de pago</b>
+                <p class="estadoPago"><%= pedido.estadoPago %></p>
+            </div>
+            <div class="pedido_section">
+                    <b>Abonar desde Aplicación</b>
+                    <div class="box_pago" id="box_pago">
+                    <p id="user_saldo">$ <%= user.saldo %></p>
+                    <button id="open"></button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="bottom_of-page">
+        <footer>footer</footer>
+    </div>
+
+    <script>
+        const btnDescarga = document.getElementById('Descargar');
+        const estado = document.querySelector('.estado');
+        const estadoPago = document.querySelector('.estadoPago');
+        
+    
+    //Configuraciones de Colores bandera
+        btnDescarga.onclick = (e) => {
+            e.target.style.cssText = 'background-color: var(--lightBlue); color: var(--fondo);'
+        }
+
+        if(estado.textContent == 'Pendiente') {
+        estado.style.cssText = "background-color: var(--thirdty);";
+        }
+        if(estado.textContent == 'Listo') {
+            estado.style.cssText = "background-color: var(--lightBlue);";
+        }
+
+        if(estadoPago.textContent == 'No abonado') {
+            estadoPago.style.cssText = "background-color: var(--thirdty);";
+        }
+        if(estadoPago.textContent == 'Abonado') {
+            estadoPago.style.cssText = "background-color: var(--lightBlue);";
+        }
+
+    //Configuracion de Boton Pagar
+    // Conseguir dato saldo y Precio
+        const pedidoID = document.getElementById('pedidoID').textContent;
+        const informationQuery = `/pedidoInformation/${pedidoID}`;
+      
+       
+        fetch(informationQuery)
+        .then((resp) => resp.json())
+        .then(function(data) {
+            const precio = data.precio;
+            const saldo = data.saldo;
+            const estado_pago = data.estadoPago;
+            console.log('Estado del pedido y el saldo');
+            const payButton = document.getElementById('Pagar');
+            const reserveButton = document.getElementById('reserveButton');
+            const open = document.getElementById('open');
+            const close = document.getElementById('close');
+            const flotante = document.querySelector('.flotante');
+            const ventana_pago = document.querySelector('.flotante_panel');
+            if(estado_pago == 'No abonado') {
+                if(saldo >= precio) {
+                open.textContent = "Abonar Virtual";
+                open.style.cssText = "background-color: var(--thirdty);";
+                habilitarVentana(flotante, ventana_pago, open, close);
+                pagarTotal(payButton, reserveButton, precio, pedidoID);
+            }
+                else {
+                    open.textContent = "Saldo Insuficiente";
+                    open.style.cssText = "background-color: var(--text);";
+                    // open.onclick = e => {open.style.cssText = "background-color: var(--thirdty);";}
+                    habilitarVentana(flotante, ventana_pago, open, close);
+                    pagarTotal(payButton, reserveButton, precio, pedidoID);
+                }
+            }
+
+            if(estado_pago == 'Señado') {
+                reserveButton.textContent = 'Completar Seña';
+                if(saldo >= precio) {
+                open.textContent = "Abonar Virtual";
+                open.style.cssText = "background-color: var(--thirdty);";
+                habilitarVentana(flotante, ventana_pago, open, close);
+                pagarSeñado(payButton, reserveButton, precio, pedidoID);
+            }
+                else {
+                    open.textContent = "Saldo Insuficiente";
+                    open.style.cssText = "background-color: var(--text);";
+                    // open.onclick = e => {open.style.cssText = "background-color: var(--thirdty);";}
+                    habilitarVentana(flotante, ventana_pago, open, close);
+                    pagarSeñado(payButton, reserveButton, precio, pedidoID);
+                }
+            }
+        
+            if(estado_pago == 'Abonado') {
+                open.textContent = "Ya abonado!";
+                open.style.cssText = "background-color: var(--lightBlue);";
+            }
+
+          // Función Pagar
+          function pagarTotal (payButton, reserveButton, precio, id) {
+            
+            reserveButton.onclick = async (e) => {
+                const señarURL = `/senarPedido/${id}`;
+                let formData = new FormData();
+                formData.append("estado", 'seña');
+                let response = await fetch(señarURL, {
+                    method: 'PUT',
+                    body: formData
+                });
+                console.log(formData);
+                window.location.href = `/pedido/${id}`;
+                }
+            payButton.onclick = async (e) => {
+                const señarURL = `/pagarPedido/${id}`;
+                let formData = new FormData();
+                formData.append("estado", 'pagar');
+                let response = await fetch(señarURL, {
+                    method: 'PUT',
+                    body: formData
+                });
+                console.log(formData);
+                window.location.href = `/pedido/${id}`;
+            }
+          }
+
+          function pagarSeñado (payButton, reserveButton, precio, id) {
+            
+            reserveButton.onclick = async (e) => {
+                const señarURL = `/pagarPedido/${id}`;
+                let formData = new FormData();
+                formData.append("estado", 'pagar');
+                let response = await fetch(señarURL, {
+                    method: 'PUT',
+                    body: formData
+                });
+                console.log(formData);
+                window.location.href = `/pedido/${id}`;
+                }
+            payButton.onclick = async (e) => {
+                const señarURL = `/pagarPedido/${id}`;
+                let formData = new FormData();
+                formData.append("estado", 'pagar');
+                let response = await fetch(señarURL, {
+                    method: 'PUT',
+                    body: formData
+                });
+                console.log(formData);
+                window.location.href = `/pedido/${id}`;
+            }
+          }
+
+
+          //Función habilitar ventana de pago
+          function habilitarVentana(flotante, ventana_pago, openButton, closeButton){
+            openButton.onclick = (e) => {
+                flotante.classList.add('show');
+                ventana_pago.classList.add('show');
+            }
+            closeButton.onclick = (e) => {
+                flotante.classList.remove('show');
+                ventana_pago.classList.remove('show');
+            }
+
+          }
+        });
+
+        
+        console.log('chau');
+      
+
+    
+
+
+    </script>
+</body>
+</html>

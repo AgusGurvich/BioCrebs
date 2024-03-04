@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREB's</title>
+    <script src="https://kit.fontawesome.com/5dd57f835c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="control.css">
+</head>
+<body>
+    
+    <div id="top__of-page">
+        <header>
+            <a href="/inicio"><div id="img_top"><img src="IMG-20231211-WA0080.jpg"></div></a>
+        </header>
+        <div id="menu-icon"><a href="/seleccion"><i class="fa-solid fa-user"></i></a></div>
+    </div>
+
+    <% if (typeof messages !== 'undefined' && messages.length > 0) {%>
+        <div class="alert alert-info" id="success_message">
+            <p> <%= success %> </p>
+            <i class="fa-solid fa-x"></i>
+        </div>
+    <%}%>
+
+    <div id="main">
+
+        <div id="main__cuenta">
+            <h4><%= user.nombre %></h4>
+            <span>$<%= user.saldo %></span>
+            <p>¿Cómo cargar saldo?</p>
+        </div>
+
+        <div id="main__utilities">
+            <div class="main__utility orange">
+                <div class="utility__info">
+                    <h4>Crear un Becario</h4>
+                    <p>-------------------------------</p>
+                    <span class="utility__span">----------------------------------------------------------------------------------------------------------</span>
+                </div>
+                <a href="/crearBecario"><i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="main__utility white">
+                <div class="utility__info">
+                    <h4>Recopilar Datos</h4>
+                    <p>-------------------------------</p>
+                    <span class="utility__span">----------------------------------------------------------------------------------------------------------</span>
+                </div>
+                <a href="/cargar_saldo"><i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="main__utility orange">
+                <div class="utility__info">
+                    <h4>Limpiar Archivos del Sistema</h4>
+                    <p>-------------------------------</p>
+                    <span class="utility__span">----------------------------------------------------------------------------------------------------------</span>
+                </div>
+                <a href="/historial"><i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="main__utility white">
+                <div class="utility__info">
+                    <h4>Eliminar Usuarios</h4>
+                    <p>-------------------------------</p>
+                    <span class="utility__span">----------------------------------------------------------------------------------------------------------</span>
+                </div>
+                <a href="/Como_funciona"><i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+             <!-- <div class="main__utility orange">
+                <div class="utility__info">
+                    <h4>Mi Cuenta</h4>
+                    <p>Configuración de la cuenta</p>
+                    <span class="utility__span">Desde acá podés personalizar cada parte de tu cuenta para estar a gusto con todo!</span>
+                </div>
+                <a href="/cuenta"><i class="fa-solid fa-arrow-right"></i></a>
+            </div> -->
+ 
+
+            <footer class="footer">
+		
+                <div class="footer__contenedor-info">
+                    <h3>Contacto:</h3>
+                    <ul>
+                        <li>Tel: +54 3414790372</li>
+                        <li>Email: age.sitiosweb@gmail.com</li>
+                        <li>Instagram: AGE.SitiosWeb</li>
+                    </ul>
+                </div>
+                <div class="footer__contenedor-info">
+                    <h3>Servicios:</h3>
+                    <ul>
+                        <li>Tel: +54 3414790372</li>
+                        <li>Email: age.sitiosweb@gmail.com</li>
+                        <li>Instagram: AGE.SitiosWeb</li>
+                    </ul>
+                </div>
+                <div id="footer__footer">
+                    <p>Creado por PicaWeb. Todos los derechos reservados</p>
+                </div>
+            </footer>
+        
+
+        </div>
+    </div>
+
+    <script src="#"></script>
+</body>
+</html>

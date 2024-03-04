@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREB's</title>
+
+    <link rel="stylesheet" href="/usuario.css">
+</head>
+<body>    
+    <div id="top__of-page">
+        <header>
+            <a href="/inicio"><div id="img_top"><img src="/IMG-20231211-WA0080.jpg"></div></a>
+        </header>
+        <div id="menu-icon"><a href="/login"><i class="fa-solid fa-user"></i></a></div>
+    </div>
+
+    <div id="main">
+        <div id="user_container">
+
+            <div class="user_section">
+                <b>ID de Usuario</b>
+                <p id="userID"><%= usuario.id %></p>
+            </div>
+            <div class="user_section">
+                <b>Fecha de Ingreso</b>
+                <p><%= usuario.ingreso%></p>
+            </div>
+            <div class="user_section">
+                <b>Nombre de Usuario</b>
+                <p id="username"><%= usuario.username %></p>
+            </div>
+            <div class="user_section">
+                <b>eMail</b>
+                <p><%= usuario.email %></p>
+            </div>
+            <div class="user_section">
+                <b>Nombre Completo</b>
+                <p><%= usuario.nombre %></p>
+            </div>
+            <div class="user_section">
+                <b>Pedidos</b>
+                <p><a class="Botones" href="/usuario/historial/<%= usuario.id %>">Pedidos del Usuario</a></p>
+            </div>
+            <div class="user_section">
+                <b>DNI</b>
+                <p id="DNI"><%= usuario.DNI %></p>
+            </div>
+            <div class="user_section">
+                <b>Saldo</b>
+                <p id="saldo">$ <%= usuario.saldo%></p>
+            </div>
+            <div class="user_section">
+                <div class="cargarSaldo" id="cargar_saldo">
+                    <input id="carga" type="number">
+                    <button id="btn-cargar">Cargar Saldo</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="bottom_of-page">
+        <footer>footer</footer>
+    </div>
+
+    <script>
+        console.log('hola');
+
+const btnCargar = document.getElementById('btn-cargar');
+const boxCarga = document.querySelector(".cargarSaldo");
+const carga = document.getElementById('carga');
+const userID = document.getElementById('userID');
+const username = document.getElementById('username');
+const DNI = document.getElementById('DNI').textContent;
+
+
+
+carga.onkeyup = e => {
+    console.log('recibiendo');
+    console.log(e.target.value);
+    let nuevaCarga = e.target.value;
+    if(e.target.value > 0) {
+        btnCargar.style.cssText = 'background-color: var(--lightBlue);';
+    } 
+    else {
+        btnCargar.style.cssText = 'background-color: red;';
+    }
+
+    return nuevaCarga;
+}
+
+btnCargar.onclick = e => {
+
+
+    const nuevaCarga = carga.value;
+    const ID = parseInt(userID.textContent);
+    const nombreUsuario = username.textContent;
+    
+    
+    console.log(nuevaCarga);
+
+    const url = '/nuevaCarga';
+
+    let data = {
+        valor: nuevaCarga,
+        id: ID,
+        DNI: DNI
+    }
+
+    let fetchData = {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers:  {"Content-type": "application/json; charset=UTF-8"}
+    }
+
+    fetch(url, fetchData)
+    .then(response =>   window.location.href = `/usuario/${DNI}`)
+
+
+}
+
+
+
+
+    </script>
+</body>
+</html>
